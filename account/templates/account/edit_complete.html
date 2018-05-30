@@ -1,0 +1,15 @@
+{% extends 'account/base.html' %}
+
+{% block title %} Edycja konta {% endblock %}
+{% block content %}
+<h1>Edycja konta zakończona sukcesem.</h1>
+<h3>Dane użytkownika:</h3>
+    <p>Użytkownik:{{ user.username }}</p>
+    <p>Adres email:{{ user.email }}</p>
+    <p>Imię:{{ user.first_name }}</p>
+    <p>Nazwisko:{{ user.last_name }}</p>
+    <p>płeć:{{ user.sex }}</p>
+    <p>Data urodzenia:{{ user.date_of_birth }}</p>
+
+<a href=" {% url 'edit' %}">Ponowna edycja</a>
+{% endblock %}

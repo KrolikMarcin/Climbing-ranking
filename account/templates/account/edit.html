@@ -1,0 +1,12 @@
+{% extends 'account/base.html' %}
+
+{% block title %} Edycja konta {% endblock %}
+{% block content %}
+<h1>Edycja konta</h1>
+<p>Ustawienia konta możesz zmienić za pomocą poniższego fomularza:</p>
+<form action="." method="post">
+    {{ user_form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Zapisz zmiany"> </p>
+</form>
+{% endblock %}

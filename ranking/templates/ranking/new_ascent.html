@@ -1,0 +1,16 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+    <h1>Nowe przejscie</h1>
+    <form method="POST" class="przejscie-form">
+        <div class="form-group">
+            {{ form1.as_p }}
+            {{ form2.as_p }}
+            {% csrf_token %}
+        </div>
+
+
+        <button type="submit" class="save btn btn-default">Zapisz</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'account/base.html' %}
+{% block title %} Rejstracja {% endblock %}
+{% block content %}
+<h1> Rejstracja się nie powiodła z powodu źle wypełnionego formularza!</h1>
+<p><a href=" {% url 'register' %}">Spróbuj ponownie wypełnić dane!</a></p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'account/base.html' %}
+
+{% block title %} Edycja przejścia {% endblock %}
+{% block content %}
+<h1>Edycja przejścia zakończona sukcesem.</h1>
+<h3>Dane po zmianie:</h3>
+    <p>Nazwa:{{ form1.name }}</p>
+    <p>Rejon:{{ form1.crag }}</p>
+    <p>Sektor:{{ form1.sector }}</p>
+    <p>Wycena:{{ form1.grade }}</p>
+    <p>Data przejścia:{{ form2.date_ascent }}</p>
+    <p>Styl:{{ form2.style }}</p>
+
+
+<a href="{% url 'ascents_logged_user' %}">Powrót do listy przejść</a>
+
+{% endblock %}

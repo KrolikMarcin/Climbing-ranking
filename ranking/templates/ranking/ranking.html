@@ -1,0 +1,163 @@
+{% extends "account/base.html "%}
+
+
+
+
+{% block content %}
+<div class="container-fluid">
+<form role="form" action="." method="POST">
+    <p class="text-center">
+        {{ form }}
+        {% csrf_token %}
+
+    <button type="submit" class="btn btn-default">Wybierz</button></p>
+</form>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <h3 class="text-center"><a href="seniors_m/ "> Seniorzy </a></h3>
+        <table class="table table-hover">
+            <thead>
+
+                <tr>
+                    <th></th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+
+            {% for user in seniors_m %}
+                <tbody>
+
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+                {% for data in user|slice:"2:" %}
+                    <td>
+                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
+                        {{ data.points }}
+                    </td>
+                {% endfor %}
+
+                </tr>
+
+
+
+            {% endfor %}
+                </tbody>
+
+
+        </table>
+
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3 class="text-center"><a href="seniors_w/ "> Seniorki </a></h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+
+            {% for user in seniors_w %}
+                <tbody>
+
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                {% for data in user|slice:"2:" %}
+                    <td>
+
+                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
+                        {{ data.points }}
+                    </td>
+
+                {% endfor %}
+                </tr>
+
+
+
+            {% endfor %}
+                </tbody>
+
+
+        </table>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3 class="text-center"><a href="juniors_m/ "> Juniorzy </a></h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+
+            {% for user in juniors_m %}
+                <tbody>
+
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                {% for data in user|slice:"2:" %}
+                    <td>
+
+                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
+                        {{ data.points }}
+                    </td>
+
+                {% endfor %}
+                </tr>
+
+
+
+            {% endfor %}
+                </tbody>
+
+
+        </table>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3 class="text-center"><a href="juniors_w/ "> Juniorki </a></h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+
+            {% for user in juniors_w %}
+                <tbody>
+
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                {% for data in user|slice:"2:" %}
+                    <td>
+
+                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
+                        {{ data.points }}
+                    </td>
+
+                {% endfor %}
+                </tr>
+
+
+
+            {% endfor %}
+                </tbody>
+
+
+        </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

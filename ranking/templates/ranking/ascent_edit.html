@@ -1,0 +1,13 @@
+{% extends 'account/base.html'%}
+{% block title %}Edycja przejścia {% endblock %}
+{% block content %}
+<h1>Edycja przejścia</h1>
+<p>Przejście edytować możesz za pomocą poniższego formularza:</p>
+<form action="." method="POST">
+    {{ form1.as_p }}
+    {{ form2.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Zapisz zmiany"> </p>
+</form>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h3>Lista dróg:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data przejścia</th>
+                <th>Nazwa drogi</th>
+                <th>Rejon</th>
+                <th>Sektor</th>
+                <th>Wycena</th>
+                <th>Styl</th>
+                <th>Punkty</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        {% for ascent in ascents.ascent_set.all %}
+            <tbody>
+                <tr>
+                    <td>{{ ascent.date_ascent }}</td>
+                    <td> {{ ascent.route.name }}</td>
+                    <td> {{ ascent.route.crag }}</td>
+                    <td> {{ ascent.route.sector }}</td>
+                    <td> {{ ascent.route.grade }}</td>
+                    <td> {{ ascent.style }}</td>
+                    <td> {{ ascent.points }}</td>
+                    <td><a href=" {% url 'ascent_edit' pk=ascent.pk %} "> edytuj przejście </a></td>
+
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

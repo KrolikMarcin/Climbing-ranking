@@ -1,0 +1,6 @@
+{% extends 'account/base.html' %}
+{% block title %} Rejstracja{% endblock %}
+{% block content %} 
+<h1>Witaj, {{ new_user.imie }}!</h1>
+<p>Twoje konto zostało utworzone. Możesz sie już <a href=" {% url 'login' %}">zalogować</a>.</p>
+{% endblock %}
