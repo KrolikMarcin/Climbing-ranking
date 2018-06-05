@@ -65,104 +65,135 @@ def ranking(request):
 
 
     return render(request, 'ranking/ranking.html', {'form': form, 'seniors_m': seniors_m[:10], 'seniors_w': seniors_w[:10], 'juniors_m': juniors_m[:10],
-                                                        'juniors_w': juniors_w[:10]})
+                                                    'juniors_w': juniors_w[:10]})
 
 
-
-def seniors_m(request):
-    users = []
-    category = "Seniorzy"
+def category(request, category):
     time = timezone.now() - relativedelta(years=18)
-
+    if category == 'seniors_w':
+        category_name = 'Seniorki'
+        players = MyUser.objects.filter(sex='w', date_of_birth__lte=time)
+    elif category == 'seniors_m':
+        category_name = 'Seniorzy'
+        players = MyUser.objects.filter(sex='m', date_of_birth__lte=time)
+    elif category == 'juniors_m':
+        category_name = 'Juniorzy'
+        players = MyUser.objects.filter(sex='m', date_of_birth__gte=time)
+    elif category == 'juniors_w':
+        category_name = 'Juniorki'
+        players = MyUser.objects.filter(sex='w', date_of_birth__gte=time)
+    users = []
     if request.method == "POST":
         form = FormDate(request.POST)
         if form.is_valid():
             year = form.cleaned_data['year']
-            for user in MyUser.objects.filter(sex='m', date_of_birth__lte=time):
+            for user in players:
                 user_data = ranking_data(user, year)
                 users.append(user_data)
-
-            return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
-    else:
-        form = FormDate()
-        year = timezone.now().year
-        for user in MyUser.objects.filter(sex='m', date_of_birth__lte=time):
-            user_data = ranking_data(user, year)
-            users.append(user_data)
-
-        return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
-
-def seniors_w(request):
-    users = []
-    category = "Seniorki"
-    time = timezone.now() - relativedelta(years=18)
-
-    if request.method == "POST":
-        form = FormDate(request.POST)
-        if form.is_valid():
-            year = form.cleaned_data['year']
-            for user in MyUser.objects.filter(sex='k', date_of_birth__lte=time):
-                user_data = ranking_data(user, year)
-                users.append(user_data)
-            return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
-    else:
-        form = FormDate()
-        year = timezone.now().year
-        for user in MyUser.objects.filter(sex='k', date_of_birth__lte=time):
-            user_data = ranking_data(user, year)
-            users.append(user_data)
-
-        return render(request, 'ranking/category.html',
-                      {'users': users, 'category': category, 'form': form})
-
-def juniors_m(request):
-
-    users = []
-    category = "Juniorzy"
-    time = timezone.now() - relativedelta(years=18)
-    if request.method == "POST":
-        form = FormDate(request.POST)
-        if form.is_valid():
-            year = form.cleaned_data['year']
-            for user in MyUser.objects.filter(sex='m', date_of_birth__gte=time):
-                user_data = ranking_data(user, year)
-                users.append(user_data)
-            return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+            return render(request, 'ranking/category.html', {'users': users, 'category_name': category_name, 'form': form})
 
     else:
         form = FormDate()
         year = timezone.now().year
-        for user in MyUser.objects.filter(sex='m', date_of_birth__gte=time):
+        for user in players:
             user_data = ranking_data(user, year)
             users.append(user_data)
 
-        return render(request, 'ranking/category.html',
-                      {'users': users, 'category': category, 'form': form})
-
-
-
-def juniors_w(request):
-
-    users = []
-    category = "Juniorki"
-    time = timezone.now() - relativedelta(years=18)
-    if request.method == "POST":
-        form = FormDate(request.POST)
-        if form.is_valid():
-            year = form.cleaned_data['year']
-            for user in MyUser.objects.filter(sex='k', date_of_birth__gte=time):
-                user_data = ranking_data(user, year)
-                users.append(user_data)
-            return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
-    else:
-        form = FormDate()
-        year = timezone.now().year
-        for user in MyUser.objects.filter(sex='k', date_of_birth__gte=time):
-            user_data = ranking_data(user, year)
-            users.append(user_data)
-
-        return render(request, 'ranking/category.html',
-                      {'users': users, 'category': category, 'form': form})
+        return render(request, 'ranking/category.html', {'users': users, 'category_name': category_name, 'form': form})
+# def seniors_m(request):
+#     users = []
+#     category = "Seniorzy"
+#     time = timezone.now() - relativedelta(years=18)
+#
+#     if request.method == "POST":
+#         form = FormDate(request.POST)
+#         if form.is_valid():
+#             year = form.cleaned_data['year']
+#             for user in MyUser.objects.filter(sex='m', date_of_birth__lte=time):
+#                 user_data = ranking_data(user, year)
+#                 users.append(user_data)
+#
+#             return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+#     else:
+#         form = FormDate()
+#         year = timezone.now().year
+#         for user in MyUser.objects.filter(sex='m', date_of_birth__lte=time):
+#             user_data = ranking_data(user, year)
+#             users.append(user_data)
+#
+#         return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+#
+# def seniors_w(request):
+#     users = []
+#     category = "Seniorki"
+#     time = timezone.now() - relativedelta(years=18)
+#
+#     if request.method == "POST":
+#         form = FormDate(request.POST)
+#         if form.is_valid():
+#             year = form.cleaned_data['year']
+#             for user in MyUser.objects.filter(sex='k', date_of_birth__lte=time):
+#                 user_data = ranking_data(user, year)
+#                 users.append(user_data)
+#             return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+#     else:
+#         form = FormDate()
+#         year = timezone.now().year
+#         for user in MyUser.objects.filter(sex='k', date_of_birth__lte=time):
+#             user_data = ranking_data(user, year)
+#             users.append(user_data)
+#
+#         return render(request, 'ranking/category.html',
+#                       {'users': users, 'category': category, 'form': form})
+#
+# def juniors_m(request):
+#
+#     users = []
+#     category = "Juniorzy"
+#     time = timezone.now() - relativedelta(years=18)
+#     if request.method == "POST":
+#         form = FormDate(request.POST)
+#         if form.is_valid():
+#             year = form.cleaned_data['year']
+#             for user in MyUser.objects.filter(sex='m', date_of_birth__gte=time):
+#                 user_data = ranking_data(user, year)
+#                 users.append(user_data)
+#             return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+#
+#     else:
+#         form = FormDate()
+#         year = timezone.now().year
+#         for user in MyUser.objects.filter(sex='m', date_of_birth__gte=time):
+#             user_data = ranking_data(user, year)
+#             users.append(user_data)
+#
+#         return render(request, 'ranking/category.html',
+#                       {'users': users, 'category': category, 'form': form})
+#
+#
+#
+# def juniors_w(request):
+#
+#     users = []
+#     category = "Juniorki"
+#     time = timezone.now() - relativedelta(years=18)
+#     if request.method == "POST":
+#         form = FormDate(request.POST)
+#         if form.is_valid():
+#             year = form.cleaned_data['year']
+#             for user in MyUser.objects.filter(sex='k', date_of_birth__gte=time):
+#                 user_data = ranking_data(user, year)
+#                 users.append(user_data)
+#             return render(request, 'ranking/category.html', {'users': users, 'category': category, 'form': form})
+#     else:
+#         form = FormDate()
+#         year = timezone.now().year
+#         for user in MyUser.objects.filter(sex='k', date_of_birth__gte=time):
+#             user_data = ranking_data(user, year)
+#             users.append(user_data)
+#
+#         return render(request, 'ranking/category.html',
+#                       {'users': users, 'category': category, 'form': form})
 
 
 def ascents(request, pk):
@@ -171,7 +202,7 @@ def ascents(request, pk):
     return render(request, 'ranking/ascents.html', {'ascents': ascents})
 
 
-
+@login_required
 def ascents_logged_user(request):
 
     ascents = get_object_or_404(MyUser, pk=request.user.id)

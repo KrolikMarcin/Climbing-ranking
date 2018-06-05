@@ -9,7 +9,7 @@ class UserRegistration(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = MyUser
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'date_of_birth', 'sex')
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email', 'date_of_birth', 'sex')
         labels = {'first_name': 'Imię', 'last_name': 'Nazwisko', 'date_of_birth': 'Data urodzenia', 'sex': 'Płeć'}
 
 

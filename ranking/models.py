@@ -23,7 +23,6 @@ class Ascent(models.Model):
         ordering = ['-date_ascent']
 
 
-
     rp = {
         "6a": 100,
         "6a+": 150,

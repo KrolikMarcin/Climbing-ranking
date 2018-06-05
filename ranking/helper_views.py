@@ -14,6 +14,7 @@ def ranking_data(user, year):
     user_data.append({'last_name': user.last_name})
     if user.ascent_set.all().filter(date_ascent__year=year).order_by('-points')[:10].aggregate(Sum('points'))['points__sum'] == None:
         user_data.append({'points': 0})
+
     else:
         user_data.append({'points': user.ascent_set.all().filter(date_ascent__year=year).order_by('-points')[:10].aggregate(Sum('points'))['points__sum']})
     return user_data
