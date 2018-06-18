@@ -3,24 +3,77 @@ from django.conf import settings
 
 
 class Route(models.Model):
+    grades = (
+        ('6a', '6a'),
+        ('6a+', '6a+'),
+        ('6b', '6b'),
+        ('6b+', '6b+'),
+        ('6c', '6c'),
+        ('6c+', '6c+'),
+        ('7a', '7a'),
+        ('7a+', '7a+'),
+        ('7b', '7b'),
+        ('7b+', '7b+'),
+        ('7c', '7c'),
+        ('7c+', '7c+'),
+        ('8a', '8a'),
+        ('8a+', '8a+'),
+        ('8b', '8b'),
+        ('8b+', '8b+'),
+        ('8c', '8c'),
+        ('8c+', '8c+'),
+        ('9a', '9a'),
+        ('9a+', '9a+'),
+        ('9b', '9b'),
+        ('9b+', '9b+'),
+
+
+    )
     name = models.CharField(max_length=50)
     crag = models.CharField(max_length=30)
     sector = models.CharField(max_length=30, blank=True)
-    grade = models.CharField(max_length=3)
+    grade = models.CharField(max_length=3, choices=grades)
     user = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Ascent')
 
     def __str__(self):
         return "{name} {crag} {grade}".format(name=self.name, crag=self.crag, grade=self.grade)
 
 class Ascent(models.Model):
+    styles = (
+        ('fl', 'fl'),
+        ('rp', 'rp'),
+        ('os', 'os'),
+
+    )
+
+
     date_ascent = models.DateField()
-    style = models.CharField(max_length=2)
+    style = models.CharField(max_length=2, choices=styles)
     points = models.IntegerField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_ascents')
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
 
+    def check_style(self, style):
+        if style == 'rp':
+            return self.rp
+        elif style == 'fl':
+            return self.fl
+        elif style == 'os':
+            return self.os
+
+    def points_converter(self, style, grade):
+
+        style = self.check_style(style)
+        for i in style:
+            if str(grade) == i:
+                return style[i]
+
+
+
+
+
     class Meta:
-        ordering = ['-date_ascent']
+        ordering = ['-points', '-date_ascent']
 
 
     rp = {
@@ -46,6 +99,7 @@ class Ascent(models.Model):
         "9a+": 1050,
         "9b": 1100,
         "9b+": 1150
+
     }
 
     fl = {

@@ -1,8 +1,26 @@
 {% extends 'account/base.html' %}
 
 {% block content %}
+
 <div class="container-fluid">
-    <h3>Lista dróg {{ascents.first_name}} {{ ascents.last_name }}:</h3>
+
+    <form role="form" action="." method="POST">
+        <p class="text-center">
+            {{ form }}
+            {% csrf_token %}
+
+        <button type="submit" class="btn btn-default">Wybierz</button></p>
+    </form>
+    {% if ascents %}
+    <h4 class="text-center">Suma punktów:{{ sum_points }}</h4>
+        <h3>{% if request.user.id == user.pk %}Lista Twoich dróg:
+        {% else %}
+        Lista dróg {{ user.first_name}} {{ user.last_name }}:
+        {% endif %}
+    </h3>
+</div>
+
+
     <table class="table">
         <thead>
             <tr>
@@ -16,7 +34,8 @@
 
             </tr>
         </thead>
-        {% for ascent in ascents.ascent_set.all %}
+        {% for ascent in ascents %}
+
             <tbody>
                 <tr>
                     <td>{{ ascent.date_ascent }}</td>
@@ -26,12 +45,16 @@
                     <td> {{ ascent.route.grade }}</td>
                     <td> {{ ascent.style }}</td>
                     <td> {{ ascent.points }}</td>
-
+                    {% if request.user.id == ascent.user.pk %}
+                        <td><a href=" {% url 'ascent_edit' pk=ascent.pk %} "> edytuj przejście </a></td>
+                    {% endif %}
                 </tr>
             </tbody>
         {% endfor %}
     </table>
-
+    {% else %}
+        <h5 class="text-center">Brak przejść w wybranym roku!</h5>
+    {% endif %}
 </div>
 
 

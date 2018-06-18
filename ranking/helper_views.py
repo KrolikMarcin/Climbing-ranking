@@ -1,22 +1,15 @@
-
-from django.db.models import Sum
-from dateutil.relativedelta import relativedelta
 from django.utils import timezone
+from operator import itemgetter
 
 
+def category_data(category, year=timezone.now().year):
+    category_users = []
 
-def ranking_data(user, year):
+    for user in category:
 
-    user_data = []
-    user_data.append(user.pk)
-    user_data.append({'date_of_birth': user.date_of_birth})
-    user_data.append({'first_name': user.first_name})
-    user_data.append({'last_name': user.last_name})
-    if user.ascent_set.all().filter(date_ascent__year=year).order_by('-points')[:10].aggregate(Sum('points'))['points__sum'] == None:
-        user_data.append({'points': 0})
+        if user.ranking_data(year) != None:
+            category_users.append(user.ranking_data(year))
 
-    else:
-        user_data.append({'points': user.ascent_set.all().filter(date_ascent__year=year).order_by('-points')[:10].aggregate(Sum('points'))['points__sum']})
-    return user_data
+    category_users = sorted(category_users, key=itemgetter('sum_points'), reverse=True)
 
-
+    return category_users

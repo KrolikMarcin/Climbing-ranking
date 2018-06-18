@@ -11,7 +11,7 @@
     <p>Data przejścia:{{ form2.date_ascent }}</p>
     <p>Styl:{{ form2.style }}</p>
 
-
-<a href="{% url 'ascents_logged_user' %}">Powrót do listy przejść</a>
+<a href='{% url "ascent_edit" pk=pk %}'>Ponowna edycja</a><br>
+<a href="{% url 'ascents' pk=request.user.id %}">Powrót do listy przejść</a>
 
 {% endblock %}

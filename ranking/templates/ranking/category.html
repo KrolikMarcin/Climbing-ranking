@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-sm-12 col-xs-12">
-            <h3 class="text-center">{{ category_name }}</h3>
+            <h3 class="text-center">{{ category_name }}:</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -23,21 +23,23 @@
                         <th>Punkty</th>
                     </tr>
                 </thead>
-                {% for user in users %}
-                    <tbody>
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            {% for data in user|slice:"1:" %}
-                                <td>
-                                    {{data.date_of_birth}}
-                                    <a href=" {% url 'ascents' pk=user|first %}">{{data.first_name }} {{ data.last_name }}</a>
-                                    {{ data.points }}
-                                </td>
 
-                            {% endfor %}
-                        </tr>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+
+                                <td>{{user.date_of_birth}}</td>
+                                <td>
+                                    <a href="{% url 'ascents' pk=user.pk %}">{{user.first_name }}</a>
+                                </td>
+                                <td>{{user.last_name}}</td>
+                                <td>{{ user.sum_points }}</td>
+
+                            </tr>
+                        {% endfor %}
                     </tbody>
-                {% endfor %}
+
             </table>
         </div>
     </div>
@@ -45,3 +47,4 @@
 
 
 {% endblock %}
+

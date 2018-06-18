@@ -2,8 +2,9 @@
 
 
 
-
 {% block content %}
+
+
 <div class="container-fluid">
 <form role="form" action="." method="POST">
     <p class="text-center">
@@ -16,7 +17,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <h3 class="text-center"><a href="{% url 'category' category='seniors_m' %}"> Seniorzy </a></h3>
+        <h3 class="text-center"><a href="{% url 'category' category='seniors_m'%}"> Seniorzy </a></h3>
         <table class="table table-hover">
             <thead>
 
@@ -28,24 +29,23 @@
                 </tr>
             </thead>
 
-            {% for user in seniors_m %}
-                <tbody>
 
+                <tbody>
+                {% for user in seniors_m %}
                 <tr>
 
                     <td>{{ forloop.counter }}</td>
-                {% for data in user|slice:"2:" %}
                     <td>
-                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
-                        {{ data.points }}
+                        <a href=" {% url 'ascents' pk=user.pk %}">{{ user.first_name }} </a>
                     </td>
-                {% endfor %}
+                    <td>{{ user.last_name }}</td>
+                    <td>{{user.sum_points}}</td>
 
                 </tr>
 
 
 
-            {% endfor %}
+                {% endfor %}
                 </tbody>
 
 
@@ -53,7 +53,7 @@
 
     </div>
     <div class="col-md-3 col-sm-6 col-xs-12">
-                <h3 class="text-center"><a href=" {% url 'category' category='seniors_w' %} "> Seniorki </a></h3>
+                <h3 class="text-center"><a href=" {% url 'category' category='seniors_w'  %} "> Seniorki </a></h3>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -64,24 +64,23 @@
                 </tr>
             </thead>
 
-            {% for user in seniors_w %}
-                <tbody>
 
+                <tbody>
+                {% for user in seniors_w %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                {% for data in user|slice:"2:" %}
+
                     <td>
+                        <a href=" {% url 'ascents' pk=user.pk %}">{{ user.first_name }}</a>
 
-                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
-                        {{ data.points }}
                     </td>
-
-                {% endfor %}
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.sum_points}}</td>
                 </tr>
 
 
 
-            {% endfor %}
+                {% endfor %}
                 </tbody>
 
 
@@ -99,24 +98,23 @@
                 </tr>
             </thead>
 
-            {% for user in juniors_m %}
-                <tbody>
 
+                <tbody>
+                {% for user in juniors_m %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                {% for data in user|slice:"2:" %}
+
                     <td>
-
-                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
-                        {{ data.points }}
+                        <a href=" {% url 'ascents' pk=user.pk %}">{{ user.first_name }}</a>
                     </td>
-
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.sum_points}}</td>
                 {% endfor %}
                 </tr>
 
 
 
-            {% endfor %}
+
                 </tbody>
 
 
@@ -134,22 +132,20 @@
                 </tr>
             </thead>
 
-            {% for user in juniors_w %}
-                <tbody>
 
+                <tbody>
+                {% for user in juniors_w %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                {% for data in user|slice:"2:" %}
                     <td>
-
-                        <a href=" {% url 'ascents' pk=user|first %}">{{ data.first_name }} {{ data.last_name }}</a>
-                        {{ data.points }}
+                        <a href=" {% url 'ascents' pk=user.pk %}">{{ user.first_name }}</a>
                     </td>
-
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.sum_points}}</td>
                 {% endfor %}
                 </tr>
 
-            {% endfor %}
+
                 </tbody>
 
 
