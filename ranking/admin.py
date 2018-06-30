@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Route, Ascent
+from ascents.models import Route, Ascent
 
 # Register your models here.
 
