@@ -66,7 +66,7 @@ def new_ascent(request):
     else:
         form_route = FormRoute(request.POST)
         form_ascent = FormAscent(request.POST)
-        
+
     return render(request, 'ascents/new_ascent.html', {'form_route': form_route, 'form_ascent': form_ascent})
 
 @login_required
